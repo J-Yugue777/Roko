@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesion</title>
+    <link rel="stylesheet" href="/static/index.css">
+</head>
+<body>
+<div class="container">
+    <form class="formulario" id="contactoForm">
+        <nav>
+            <img src="/static/ROKO2.png.png" width="100" height="100" alt="Logo">
+           <ul class="formulario-ul">
+              <li class="li-formulario"> <a href="{{ url_for('Login') }}">Iniciar Sesion</a></li>
+              <li class="li-formulario"> <a href="{{ url_for('index') }}">Resistrarse</a></li>
+            </ul>
+       </nav>
+        <h2 class="h2-registro">Iniciar Sesion</h2>
+        <section class="inputs">
+        <label>Nombre</label>
+        <input type="text" placeholder="Por ej. SrSpes" id="nombre">
+        <label>Contraseña</label>
+        <input type="password" id="contra">
+        </section>
+        <button type="submit">Enviar</button>
+        <p>No Tienes Un Cuenta? <a href="{{url_for('index') }}">Registrarse</a></p>
+    </form>
+<script>
+    document.getElementById('contactoForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const data = {
+    nombre: document.getElementById('nombre').value,
+    contra: document.getElementById('contra').value
+
+  };
+  const res = await fetch('/contacto', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  console.log(await res.json());
+});
+</script>
+</body>
+</html>

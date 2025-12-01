@@ -1,0 +1,120 @@
+/* Estilos generales para el cuerpo de la página */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #0d1a18, #1E2D2B, #0d1a18);
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+}
+/* Contenedor principal de la barra de navegación */
+.menu {
+    background-color: #333; /* Fondo oscuro */
+    background: linear-gradient(to right, #1E2D2B, #1A6348, #1E2D2B, #1E2D2B, #1E2D2B, #1A6348, #1E2D2B, #1E2D2B, #1E2D2B, #1A6348);
+    color: white;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor interno para centrar el contenido y dar margen */
+.container-fluid {
+    display: flex; /* Alinea elementos horizontalmente */
+    justify-content: space-between; /* Distribuye el espacio entre elementos (marca a un lado, enlaces al otro) */
+    align-items: center; /* Centra verticalmente los elementos */
+    max-width: 1200px; /* Ancho máximo en pantallas grandes */
+    margin: 0 auto; /* Centra el contenedor en la página */
+    padding: 0 20px;
+}
+
+/* Estilo para el logotipo o marca */
+.navbar-brand {
+    color: white;
+    text-decoration: none;
+    font-size: 2rem; /* Tamaño de fuente más grande */
+    font-weight: bold;
+    padding: 5px 0;
+  /* Intentar usar una fuente Sans-serif que el sistema tenga (Arial/Helvetica) */
+  font-family: 'Arial', 'Helvetica Neue', sans-serif;
+  
+  /* Negrita */
+  font-weight: bold; 
+  
+  /* Cursiva */
+  font-style: italic;
+}
+.navbar-brand:hover{
+    color: #4ADDAA;
+}
+
+/* Ocultar el botón del menú de hamburguesa por defecto en desktop */
+.navbar-toggler {
+    display: none; 
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Lista de enlaces */
+.navbar-nav {
+    list-style: none; /* Quita los puntos de la lista */
+    padding: 0;
+    margin: 0;
+    display: flex; /* Alinea los ítems de la lista horizontalmente */
+}
+
+.nav-item {
+    margin-left: 20px; /* Espacio entre los enlaces */
+}
+
+/* Estilo de los enlaces */
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    transition: color 0.3s ease; /* Transición suave al pasar el mouse */
+    border-bottom: 2px solid #4ADDAA; /* Borde inferior para resaltar */
+    font-weight: bold;
+}
+
+/* Efecto hover (al pasar el mouse) en los enlaces */
+.nav-link:hover {
+    color: #4ADDAA; /* Color verde al pasar el mouse */
+}
+/* Media Query para hacerlo responsivo en móviles */
+@media (max-width: 768px) {
+    .container-fluid {
+        flex-wrap: wrap; /* Permite que los elementos pasen a la siguiente línea si no hay espacio */
+    }
+
+    .navbar-toggler {
+        display: block; /* Muestra el botón de hamburguesa en móviles */
+    }
+
+    .navbar-collapse {
+        /* En móviles, oculta los enlaces por defecto */
+        display: none; 
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    /* Nota: Para que el botón funcione (mostrar/ocultar) 
+       necesitarías un poco de JavaScript adicional. */
+    /* .navbar-collapse.show { display: block; } */
+
+    .navbar-nav {
+        flex-direction: column; /* Apila los enlaces verticalmente en móviles */
+        width: 100%;
+    }
+
+    .nav-item {
+        margin: 0;
+        text-align: center;
+        border-bottom: 1px solid #444; /* Línea separadora */
+    }
+
+    .nav-link {
+        display: block;
+        padding: 15px;
+    }
+}
