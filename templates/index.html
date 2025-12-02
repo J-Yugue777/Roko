@@ -1,57 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario De Registro</title>
-    <link rel="stylesheet" href="/static/index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roko inicio</title>
+
+  <link rel="stylesheet" href="pagina_principla.css">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
-<div class="container">
-    <form id="contactoForm" class="formulario">
-        <nav>
-        <img src="{{ url_for('static', filename='ROKO2.png.png') }}" width="370" height="170" alt="Logo">
-           <ul class="formulario-ul">
-              <li class="li-formulario"> <a href="{{ url_for('Login') }}">Iniciar Sesión</a></li>
-              <li class="li-formulario"> <a href="{{ url_for('index') }}">Registrarse</a></li>
-              <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    
+    <nav class="menu">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{ url_for('index') }}">ROKO</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{{ url_for('index') }}">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('acerca_nosotros')}}">Acerca de</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{{url_for('Conctacto')}}">Conctacto</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{{ url_for('Login') }}">Inicia Sesion</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{{ url_for('registro') }}">Registro</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  </nav>
 
-            </ul>
-       </nav>
-        <h2 class="h2-registro">Registro</h2>
-        <section class="inputs">
-        <label>Nombre</label>
-        <input type="text" placeholder="Por ej. SrSpes" id="nombre">
-        <label>Email</label>
-        <input type="email"  placeholder="tuemail@gmail.com" id="correo">
-        <label>Contraseña</label>
-        <input type="password">
-        <label>Confirmar Contraseña</label>
-        <input type="password" id="contra">
-        </section>
-        <button type="submit">Enviar</button>
-        <p>Ya Tienes Un Cuenta? <a href="{{ url_for('Login') }}">Iniciar Sesion</a></p>
-    </form>
-<script>
-document.getElementById('contactoForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const data = {
-    nombre: document.getElementById('nombre').value,
-    correo: document.getElementById('correo').value,
-    contra: document.getElementById('contra').value,
-    contra: document.getElementById('contra').value
+    
+  <header>
+    <img src="ROKO2.png.png" alt="Logo" class="logo"><br>
+    Lector Antivirus — Seguridad Digital
+  </header>
 
-  };
-  const res = await fetch('/contacto', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  });
-  console.log(await res.json());
-});
+  <main>
+    <div class="container"> 
+        <div class="header"> 
+            <img src="ROKO2.png.png" alt="logo" class="logo-main">
+        </div> 
+        
+        <input id="file-input" type="file" style="display: none;"> 
+
+        <div class="integrated-box">
+            <label for="file-input" class="select-file-label">
+                Elegir archivo
+            </label>
+            
+            <span id="file-name-display" class="file-name-display">
+                No se eligió ningún archivo
+            </span>
+        </div>
+        
+        <br>
+        <button onclick="analizarArchivo()">Analizar</button>
+        <div id="resultado"></div>
+    </div>
+</main>
+
+  <footer>
+    © 2025 Lector Antivirus 
+  </footer>
+
+
+  
+ <script>
+    function analizarArchivo() {
+        // CAMBIAMOS el ID de 'archivo' a 'file-input'
+        const archivo = document.getElementById('file-input').files[0]; 
+        const resultado = document.getElementById('resultado');
+
+        if (!archivo) {
+            resultado.innerHTML = "No has seleccionado ningún archivo.";
+            resultado.style.color = "#4ADDAA";
+            return;
+        }
+
+        resultado.style.color = "white";
+        resultado.innerHTML = " Analizando archivo...";
+
+        const nombre = archivo.name.toLowerCase();
+
+        setTimeout(() => {
+            if (nombre.includes("virus") || nombre.includes("malware")) {
+                resultado.innerHTML = " El archivo contiene una amenaza detectada.";
+                resultado.style.color = "#ff6666";
+            } else {
+                resultado.innerHTML = " El archivo está limpio. No se detectaron amenazas.";
+                resultado.style.color = "#4ADDAA";
+            }
+        }, 2000);
+    }
+    
+    // Función para actualizar el campo de estado
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('file-input').addEventListener('change', function() {
+            // CAMBIAMOS el ID a 'file-name-display'
+            const displayElement = document.getElementById('file-name-display');
+            const fileName = this.files.length > 0 ? this.files[0].name : 'No se eligió ningún archivo';
+            displayElement.textContent = fileName;
+        });
+    });
 </script>
-</div>
 
 </body>
-</html> 
+</html>
