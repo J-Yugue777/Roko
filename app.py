@@ -57,14 +57,18 @@ def Login():
 def index():
     return render_template('index.html')
 
+
 @app.route('/registro')
 def registro():
     return render_template('registro.html')
 
-@app.route('/acerca_nosotros')
-def acerca_nosotros():
-    return render_template('acerca_nosotros.html')
+@app.route('/acerca_de')
+def acerca_de():
+    return render_template('acerca_de.html')
 
+@app.route('/contacto')
+def contacto():
+    return render_template('contacto.html')
 
 #inicio de sesion y registro guardado
 

@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Roko inicio</title>
 
-  <link rel="stylesheet" href="pagina_principla.css">
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     
@@ -22,10 +20,10 @@
           <a class="nav-link" aria-current="page" href="{{ url_for('index') }}">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('acerca_nosotros')}}">Acerca de</a>
+          <a class="nav-link" href="{{ url_for('acerca_de') }}">Acerca de</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="{{url_for('Conctacto')}}">Conctacto</a>
+          <a class="nav-link " href="{{ url_for('contacto') }}">Conctacto</a>
         </li>
         <li class="nav-item">
           <a class="nav-link " href="{{ url_for('Login') }}">Inicia Sesion</a>
@@ -40,14 +38,14 @@
 
     
   <header>
-    <img src="ROKO2.png.png" alt="Logo" class="logo"><br>
+    <img src="/static/ROKO2.png.png" alt="Logo" class="logo"><br>
     Lector Antivirus — Seguridad Digital
   </header>
 
   <main>
     <div class="container"> 
         <div class="header"> 
-            <img src="ROKO2.png.png" alt="logo" class="logo-main">
+            <img src="/static/ROKO2.png.png" alt="logo" class="logo-main">
         </div> 
         
         <input id="file-input" type="file" style="display: none;"> 
