@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify, render_template  # Importa Flask para crear la app web, manejar peticiones y usar plantillas HTML
+from flask import Flask, request, jsonify, render_template, session,url_for,redirect  # Importa Flask para crear la app web, manejar peticiones y usar plantillas HTML
+from werkzeug.security import generate_password_hash, check_password_hash
 import psycopg2  # Permite conectarse y trabajar con bases de datos PostgreSQL
 from psycopg2.extras import RealDictCursor  # Devuelve los resultados de las consultas como diccionarios (clave: valor)
 import os  # Permite acceder a variables del sistema y manejar rutas de archivos
@@ -39,6 +40,7 @@ def crear_tabla():
             creado TIMESTAMP DEFAULT NOW()   
  );
         """)
+        
         conexion.commit()  # Guarda los cambios en la base de datos
         cursor.close()     # Cierra el cursor
         conexion.close()   # Cierra la conexión
@@ -71,6 +73,10 @@ def contacto():
     return render_template('contacto.html')
 
 #inicio de sesion y registro guardado
+
+app.secret_key = os.urandom(24)  # Genera una clave aleatoria
+
+
 
 
 
@@ -106,8 +112,12 @@ def guardar_contactos():
                 """
                 cursor.execute(sql_insertar, (nombre, correo, contra))
                 contacto_id = cursor.fetchone()[0]
+                contra_hash = generate_password_hash(contra)
+                cursor.execute("INSERT INTO contactos (nombre, correo, contra) VALUES (%s, %s, %s)",(nombre, correo, contra_hash))
+                
 
         conexion.close()
+
 
         return jsonify({'mensaje': 'Contacto guardado exitosamente', 'id': contacto_id}), 201
 
@@ -146,6 +156,48 @@ def ver_contactos():
         # Muestra el error si ocurre algún problema
         print(f" Error al obtener contactos: {e}")
         return jsonify({'error': 'Error al obtener contactos'}), 500
+    
+
+#inicio de sesion prueba
+
+@app.route('/contactos', methods=['POST'])
+def login():
+    datos = request.form.to_dict()
+    correo = datos.get('correo', '').strip()
+    contra = datos.get('contra', '').strip()
+
+    conexion = conectar_bd()
+    if conexion is None:
+        return jsonify({'error': 'No se pudo conectar a la base de datos'}), 500
+
+    with conexion:
+        with conexion.cursor(cursor_factory=RealDictCursor) as cursor:
+            cursor.execute("SELECT * FROM contactos WHERE correo = %s", (correo,))
+            usuario = cursor.fetchone()
+
+    conexion.close()
+
+    if usuario and check_password_hash(usuario['contra'], contra):
+        # Guardamos datos en la sesión
+        session['usuario_id'] = usuario['id']
+        session['usuario_nombre'] = usuario['nombre']
+        return redirect(url_for('index'))
+    else:
+        return jsonify({'error': 'Correo o contraseña incorrectos'}), 401
+    
+
+@app.route('/perfil')
+def perfil():
+    if 'usuario_id' not in session:
+        return redirect(url_for('Login'))  # Redirige si no está logueado
+    return f"Bienvenido {session['usuario_nombre']}"
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('inicio'))
+
+
 
 # Punto de inicio del servidor Flask
 if __name__ == '__main__':

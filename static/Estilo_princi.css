@@ -1,0 +1,409 @@
+body {
+    font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    min-height: 100vh;
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    
+
+    /* CAMBIOS AQUÍ: Gradiente Radial Profundo */
+    background: #131E1C; /* Color de respaldo muy oscuro */
+    /* Crea un punto focal con el verde de acento (#1A6348) en el centro */
+    background: radial-gradient(circle at center, #1A6348 0%, #1E2D2B 45%, #131E1C 100%);
+}
+body::before {
+    content: '';
+    position: fixed; /* Cubre toda la ventana de vista */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Utiliza un gradiente para simular líneas de escaneo o ruido sutil */
+    background-image: repeating-linear-gradient(
+        0deg,
+        rgba(74, 221, 170, 0.03), /* Verde muy transparente */
+        rgba(0, 0, 0, 0.5) 1px,  /* Línea oscura delgada */
+        transparent 2px
+    );
+    pointer-events: none; /* Asegura que el usuario pueda interactuar con el contenido */
+    opacity: 0.8; /* Opacidad para que sea muy discreto */
+    z-index: -1;
+}
+
+
+header {
+    background: rgba(0, 0, 0, 0.4); 
+    width: 100%;
+    padding: 25px 20px;
+    
+    /* CAMBIOS EN LA TIPOGRAFÍA */
+    font-size: 2em; /* Más grande para destacar */
+    font-weight: 800; /* Mucho más grueso y audaz */
+    letter-spacing: 3px; /* Aumenta un poco más el espaciado para un look técnico */
+    text-transform: uppercase; /* Opcional: convierte el título a mayúsculas para más impacto */
+    
+    /* Estilos visuales del borde y sombra (manteniendo la coherencia) */
+    border-bottom: 2px solid #4ADDAA; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 
+                0 0 15px rgba(74, 221, 170, 0.3);
+}
+body {
+    font-family: 'Rajdhani', "Segoe UI", Arial, sans-serif;
+    /* ... el resto de tus estilos de body ... */
+}
+
+.logo {
+  width: 360px;    
+  margin-bottom: 30px;
+}
+main {
+  margin-top: 50px;
+  width: 100%;
+}
+
+.container {
+  background: #ffffff22;
+  padding: 40px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+  margin: auto;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  padding-top: 50px;
+  padding-bottom: 50px;
+
+  display: flex; /* CAMBIO CLAVE: Usa Flexbox para alinear el contenido interno */
+  flex-direction: column;
+  align-items: center;
+  
+  /* Fondo dentro del recuadro */
+  background: linear-gradient(to bottom, #0d1a18, #1E2D2B, #0d1a18);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+input[type="file"] {
+  margin-top: 20px;
+  background: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  color: #004080;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button {
+    /* Estilo del botón de acción */
+    width: 200px;
+    height: 55px;
+    margin: 25px auto 20px;
+    border: none;
+    border-radius: 45px;
+    transition: all 0.4s ease; /* Transición más suave */
+    cursor: pointer;
+    background: #4ADDAA; /* Color de acento para el botón principal */
+    color: #020f05; /* Texto oscuro sobre el acento */
+    font-size: 1.1em;
+    font-weight: 700;
+    text-transform: uppercase;
+    box-shadow: 0 5px 15px rgba(74, 221, 170, 0.3);
+}
+
+button:hover {
+    background: #118d53; /* Tono de verde más oscuro al pasar el ratón */
+    color: white;
+    font-size: 1.2em; /* Incremento más moderado */
+    box-shadow: 0 8px 20px rgba(26, 99, 72, 0.5);
+    transform: translateY(-2px); /* Pequeño efecto de elevación */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Espacio entre el botón y otros elementos */
+    margin-top: 40px; 
+}
+
+
+p {
+    text-align: center;
+    color: #4ADDAA; /* Párrafos informativos con color de acento */
+    font-size: 0.95em;
+    margin-top: 30px;
+}
+
+p a {
+    color: #1e90ff; /* Azul para enlaces (puede ser el azul vibrante que ya tenías) */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+p a:hover {
+    color: #4ADDAA;
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 600px) {
+    form{
+        width: 100%;
+    }
+    .li-formulario a.activo{
+       border-bottom: 2px solid #4ADDAA;
+       color: #ffffff;
+       padding-bottom: 5px;
+    }
+    
+    
+}
+
+
+
+
+
+
+.container {
+  /* ... (Tus estilos originales para dimensiones y espaciado) ... */
+  box-shadow: 4px 4px 30px rgba(0, 0, 0, .2); /* Sombra suave */
+  background-color: rgba(0, 110, 255, 0.041); /* Fondo azul translúcido muy claro */
+}
+.header {
+  width: 90%; /* Asegura que el área punteada ocupe más espacio dentro del contenedor */
+  min-height: 180px; /* CAMBIO CLAVE: Aumenta la altura mínima para que sea más grande */
+  padding: 20px;
+  flex: 1;
+  border: 3px dashed rgba(74, 221, 170, 0.5); /* Borde punteado de color de acento, semitransparente */
+  box-shadow: inset 0 0 10px rgba(74, 221, 170, 0.2);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #fff; /* El texto "VERIFIQUEMOS" es blanco */
+  Background: rgba(0, 0, 0, 0.4); /* Fondo ligeramente más transparente para que se note la textura */
+
+}
+
+.header svg {
+    height: 100px;
+    fill: none; /* Asegura que no tenga relleno sólido */
+    stroke: #4ADDAA; /* El trazo del SVG es del color de acento */
+    stroke-width: 1.5;
+}
+
+.header p {
+    color: #4ADDAA; /* El texto es del color de acento */
+}
+
+footer {
+    /* *CLAVE*: Margen superior grande para separar del botón/contenido */
+    margin-top: 80px; 
+    
+    /* Relleno interno para que el texto no toque los bordes del footer */
+    padding: 20px 0; 
+    
+    /* Aseguramos que ocupe todo el ancho */
+    width: 100%; 
+    
+    /* Fondo oscuro sutil si lo quieres definir */
+    background-color: rgba(0, 0, 0, 0.2); 
+    
+    /* Centrado del texto y fuente sutil */
+    text-align: center;
+    font-size: 0.85em;
+    color: rgba(255, 255, 255, 0.5); /* Color grisáceo para que sea sutil */
+}
+
+.footer svg {
+  height: 130%;
+  fill: royalblue;
+  background-color: rgba(70, 66, 66, 0.103);
+  border-radius: 50%;
+  padding: 2px;
+  cursor: pointer;
+  box-shadow: 0 2px 30px rgba(0, 0, 0, 0.205);
+}
+
+.footer p {
+  flex: 1;
+  text-align: center;
+}
+
+#file {
+  display: none;
+}
+
+
+
+
+.integrated-box {
+    /* Mantenemos el Flexbox y el Centrado */
+    display: flex; 
+    width: 95%; /* Ocupa más ancho del .container */
+    max-width: 380px; /* Tamaño máximo ligeramente mayor */
+    height: 60px; /* Aumentamos la altura de 50px a 60px para más aire */
+    margin: 35px auto; /* Más espacio arriba y abajo */
+    border-radius: 45px;
+    overflow: hidden; 
+    
+    /* Mantenemos el estilo de seguridad */
+    border: 3px solid #4ADDAA;
+    box-shadow: 0 0 15px rgba(74, 221, 170, 0.7); /* Brillo más intenso */
+}
+
+/* --- 2. Botón 'Elegir archivo' (El Lado Izquierdo) --- */
+.select-file-label {
+    /* Estilo del botón pequeño a la izquierda */
+    flex-shrink: 0; /* No se encoge */
+    padding: 0 15px;
+    height: 100%; /* Ocupa toda la altura del contenedor */
+    
+    /* Colores */
+    background-color: #4ADDAA; /* Color sólido verde */
+    color: #020f05; /* Texto oscuro */
+    
+    /* Centra el texto verticalmente */
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+
+
+
+
+.select-file-label:hover {
+    background-color: #118d53; /* Tono más oscuro al pasar el ratón */
+    color: white;
+}
+
+/* --- 3. Campo de Nombre de Archivo (El Lado Derecho) --- */
+.file-name-display {
+    flex-grow: 1; 
+    padding: 0 15px; 
+    height: 100%;
+    
+    background-color: white; 
+    color: #333; 
+    
+    display: flex;
+    align-items: center;
+    text-align: left;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    font-size: 1em; /* Aumentamos la fuente de 0.9em a 1em */
+    font-weight: 500; /* Aseguramos que sea legible */
+}
+
+
+
+
+
+
+
+.logo-main {
+    /* Basado en tu estilo anterior para el logo */
+    width: 360px; /* Ancho que tenías definido antes */
+    height: auto; /* Mantiene la proporción de la imagen */
+    margin-bottom: 30px; /* Margen para separarlo del texto "Lector Antivirus..." */
+    
+    /* Agregamos estilos estéticos sutiles para el logo */
+    filter: drop-shadow(0 0 10px rgba(74, 221, 170, 0.7)); /* Un brillo suave de color de acento */
+    transition: all 0.5s ease-in-out;
+}
+
+
+
+
+.menu {
+    /* 1. Fondo: Reemplazamos el color sólido con un gradiente oscuro de múltiples tonos */
+    background-image: linear-gradient(to right, 
+        #040807,      /* Tono más oscuro (casi negro) */
+        #0d1a18,      /* Tu tono más oscuro de la paleta */
+        #111e1c,      /* Tono intermedio (más claro) */
+        #0d1a18,      /* De vuelta al tono oscuro */
+        #040807       /* Final más oscuro */
+    );
+    background-color: #040807; /* Fondo de respaldo (fallback) */
+    
+    padding: 15px 0;
+    color: white; 
+    
+    /* 2. Separación: Mantenemos el borde y la sombra para que flote */
+    border-bottom: 3px solid #4ADDAA; /* Línea brillante de separación */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.9); /* Sombra más densa */
+    
+    position: sticky; 
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    
+}
+
+.container-fluid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 40px; 
+}
+
+/* Logo ROKO */
+.navbar-brand {
+    color: #4ADDAA;
+    font-size: 2rem;
+    font-weight: bold;
+    font-style: italic;
+    font-family: 'Arial', 'Helvetica Neue', sans-serif;
+    transition: color 0.3s;
+}
+
+.navbar-brand:hover {
+    color: #FFFFFF;
+}
+
+/* Enlaces */
+.navbar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; 
+}
+
+.nav-item {
+    margin-left: 20px;
+}
+
+.nav-link {
+    color: #E0E0E0;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-bottom: 2px solid transparent; 
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+/* Estilo para el enlace activo (Acerca de) y Hover */
+.nav-link[href*="Acerca_de.html"],
+.nav-link:hover { 
+    color: #4ADDAA;
+    border-bottom: 2px solid #4ADDAA;
+}
+
+/* Ocultar el botón de hamburguesa en desktop */
+.navbar-toggler {
+    display: none;
+}
