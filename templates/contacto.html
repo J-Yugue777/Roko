@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>contacto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='contac.css') }}">
+</head>
+<body>
+    <nav class="menu">
+   <div class="container-fluid">
+    <a class="navbar-brand" href="{{ url_for('index') }}">ROKO</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{{ url_for('index') }}">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('acerca_de') }}">Acerca de</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{{ url_for('contacto') }}">Conctacto</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{{ url_for('Login') }}">Inicia Sesion</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{{ url_for('registro') }}">Registro</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  </nav>
+    
+
+
+
+  <header>
+        <h1>Contáctanos</h1>
+        <p>Estamos listos para escucharte. Elige la vía de comunicación que mejor se adapte a tus necesidades.</p>
+    </header>
+
+    <main>
+        <section id="porque">
+            <h2>¿Por qué deberías contactarnos?</h2>
+            <p>Valoramos tu opinión, tus ideas y tus reportes. Queremos que nuestra colaboración sea lo más transparente y efectiva posible. Aquí tienes algunas razones:</p>
+            <ul>
+                <li><strong>Colaboración en Código:</strong> ¿Quieres contribuir a nuestro proyecto? ¡GitHub es el lugar!</li>
+                <li><strong>Soporte Rápido:</strong> ¿Necesitas ayuda inmediata o tienes una consulta breve? Usa WhatsApp.</li>
+                <li><strong>Consultas Formales:</strong> Para propuestas de negocio, prensa o feedback detallado, el correo es ideal.</li>
+            </ul>
+        </section>
+
+        <section id="metodos-contacto">
+            <h2>Nuestras Vías de Contacto</h2>
+
+            <div class="contact-method github">
+                <h3>GitHub (Colaboración y Contribuciones)</h3>
+                <p>Si deseas reportar un bug, proponer una nueva característica o contribuir directamente al código, este es el medio ideal.</p>
+                <p>
+                    <a href="https://github.com/J-Yugue777/Roko" target="_blank">Visita nuestro Repositorio de GitHub</a>
+                    
+                </p>
+            </div>
+
+            <div class="contact-method whatsapp">
+                <h3>WhatsApp (Consultas Rápidas y Soporte)</h3>
+                <p>Para preguntas directas y soporte técnico rápido. Solo haz clic para iniciar un chat.</p>
+                <p>
+                    <a href="https://wa.me/3174080883" target="_blank">Enviar un mensaje por WhatsApp</a>
+                    
+                </p>
+            </div>
+
+            <div class="contact-method email">
+                <h3>Correo Electrónico (Formal y Detallado)</h3>
+                <p>Perfecto para comunicaciones de prensa, propuestas de negocio o consultas que requieran una respuesta más elaborada.</p>
+                <p>
+                    <a href="mailto:roko.hhtyi2025@gmail.com?subject=Consulta%20desde%20la%20Web">Envíanos un Correo Electrónico</a>
+                    
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2025 [Tu Nombre/Empresa]. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

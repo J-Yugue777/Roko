@@ -1,0 +1,304 @@
+/* 2. Barra de Navegación (NAV .menu) 🛡 */
+/* ========================================= */
+.menu {
+    /* 1. Fondo: Reemplazamos el color sólido con un gradiente oscuro de múltiples tonos */
+    background-image: linear-gradient(to right, 
+        #040807, 
+        #0d1a18, 
+        #111e1c, 
+        #0d1a18, 
+        #040807 
+    );
+    background-color: #040807; /* Fondo de respaldo (fallback) */
+    
+    padding: 15px 0;
+    color: white; 
+    
+    /* 2. Separación: Mantenemos el borde y la sombra para que flote */
+    border-bottom: 3px solid #4ADDAA; /* Línea brillante de separación */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.9); /* Sombra más densa */
+    
+    position: sticky; 
+    top: 0;
+    /* CLAVE PARA SOLUCIONAR EL ANCHO: Ocupa todo el espacio horizontal */
+    width: 100%; 
+    z-index: 1000;
+}
+
+.container-fluid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* CLAVE: Máximo ancho para desktop */
+    max-width: 1200px; 
+    /* El margen auto centra el contenido */
+    margin: 0 auto;
+    padding: 0 40px; 
+    /* El 100% de ancho asegura el uso completo del espacio disponible */
+    width: 100%; 
+}
+
+/* Logo ROKO */
+.navbar-brand {
+    color: #4ADDAA;
+    font-size: 2rem;
+    font-weight: bold;
+    font-style: italic;
+    font-family: 'Arial', 'Helvetica Neue', sans-serif;
+    transition: color 0.3s;
+}
+
+.navbar-brand:hover {
+    color: #FFFFFF;
+}
+
+/* Enlaces */
+.navbar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; 
+}
+
+.nav-item {
+    margin-left: 20px;
+}
+
+.nav-link {
+    color: #E0E0E0;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-bottom: 2px solid transparent; 
+    transition: all 0.3s ease;
+    font-weight: 500;
+    white-space: nowrap; /* Evita que los enlaces se rompan en dos líneas */
+}
+
+/* Estilo para el enlace activo (Acerca de) y Hover */
+.nav-link[href*=""],
+.nav-link:hover { 
+    color: #4ADDAA;
+    border-bottom: 2px solid #4ADDAA;
+}
+
+/* Ocultar el botón de hamburguesa en desktop */
+.navbar-toggler {
+    display: none;
+}
+
+
+
+
+
+
+body {
+    /* Familia de fuentes consistente con tu estilo */
+    font-family: 'Roboto', 'Segoe UI', Arial, sans-serif; 
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    min-height: 100vh;
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    
+    /* Gradiente Radial Profundo y Oscuro */
+    background: #131E1C; /* Color de respaldo muy oscuro */
+    background: radial-gradient(circle at center, #1A6348 0%, #1E2D2B 45%, #131E1C 100%);
+}
+
+/* Efecto de líneas de escaneo (simulación de ruido) */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: repeating-linear-gradient(
+        0deg,
+        rgba(74, 221, 170, 0.03), /* Verde muy transparente */
+        rgba(0, 0, 0, 0.5) 1px, 
+        transparent 2px
+    );
+    pointer-events: none;
+    opacity: 0.8;
+    z-index: -1;
+}
+
+/*
+ * -------------------------------------------
+ * Estilos del Encabezado (Header)
+ * -------------------------------------------
+ */
+header {
+    background: rgba(0, 0, 0, 0.4); 
+    width: 100%;
+    padding: 25px 20px;
+    
+    /* Tipografía para destacar */
+    font-size: 2em;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #4ADDAA; /* Título principal en color de acento */
+    
+    /* Estilos visuales de borde y sombra */
+    border-bottom: 2px solid #4ADDAA; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 
+                0 0 15px rgba(74, 221, 170, 0.3);
+}
+
+header h1 {
+    margin: 0 0 10px 0;
+}
+
+header p {
+    /* Estilo para el subtítulo del header */
+    color: #fff;
+    font-size: 0.9em;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-transform: none;
+}
+
+
+/*
+ * -------------------------------------------
+ * Estilos del Contenido Principal (Main/Sections)
+ * -------------------------------------------
+ */
+main {
+    margin-top: 50px;
+    width: 90%;
+    max-width: 900px; /* Ancho máximo para el contenido principal */
+    padding: 0 20px;
+}
+
+/* Estilo para las secciones de contenido */
+section {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: rgba(13, 26, 24, 0.8); /* Fondo oscuro semitransparente para las secciones */
+    border-radius: 10px;
+    border: 1px solid rgba(74, 221, 170, 0.2);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    text-align: left; /* Alineamos el texto a la izquierda dentro de las secciones */
+}
+
+section h2 {
+    color: #4ADDAA; /* Títulos de sección en color de acento */
+    font-size: 1.8em;
+    border-bottom: 1px dashed rgba(74, 221, 170, 0.4);
+    padding-bottom: 10px;
+    margin-top: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+section p, section ul {
+    color: #E0E0E0;
+    font-size: 1.1em;
+    line-height: 1.7;
+}
+
+section ul {
+    list-style-type: none; /* Quitamos los puntos por defecto */
+    padding-left: 0;
+}
+
+section ul li::before {
+    content: ">>"; /* Usamos ">>" como marcador de lista */
+    color: #4ADDAA;
+    font-weight: bold;
+    display: inline-block; 
+    width: 2em; /* Espacio para el marcador */
+    margin-left: -2em;
+}
+
+
+/*
+ * -------------------------------------------
+ * Estilos de los Métodos de Contacto (.contact-method)
+ * -------------------------------------------
+ */
+.contact-method {
+    border: 2px solid rgba(74, 221, 170, 0.5);
+    padding: 20px;
+    margin-top: 25px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.3); /* Fondo oscuro para cada método */
+}
+
+.contact-method:hover {
+    background-color: rgba(26, 99, 72, 0.3); /* Fondo más claro al pasar el ratón */
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(74, 221, 170, 0.3);
+}
+
+.contact-method h3 {
+    margin-top: 0;
+    color: #fff;
+    font-size: 1.4em;
+    text-transform: uppercase;
+}
+
+/* Estilos de los Enlaces por Método */
+.contact-method a {
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    margin-top: 10px;
+}
+
+/* GitHub - Tono Gris/Blanco para el enlace */
+.contact-method.github a {
+    background-color: #333;
+    color: #fff;
+}
+.contact-method.github a:hover {
+    background-color: #4ADDAA;
+    color: #020f05;
+}
+
+/* WhatsApp - Tono Verde */
+.contact-method.whatsapp a {
+    background-color: #25d366;
+    color: white;
+}
+.contact-method.whatsapp a:hover {
+    background-color: #128c7e;
+}
+
+/* Correo Electrónico - Tono Azul/Verde Acuático */
+.contact-method.email a {
+    background-color: #1e90ff; /* Azul vibrante de tu CSS */
+    color: white;
+}
+.contact-method.email a:hover {
+    background-color: #4ADDAA;
+    color: #020f05;
+}
+
+
+/*
+ * -------------------------------------------
+ * Estilos del Pie de Página (Footer)
+ * -------------------------------------------
+ */
+footer {
+    /* CLAVE: Margen superior grande para separar del contenido */
+    margin-top: 80px; 
+    padding: 20px 0; 
+    width: 100%; 
+    background-color: rgba(0, 0, 0, 0.2); 
+    text-align: center;
+    font-size: 0.85em;
+    color: rgba(255, 255, 255, 0.5); /* Color grisáceo sutil */
+}

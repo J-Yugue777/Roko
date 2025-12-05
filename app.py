@@ -81,6 +81,8 @@ app.secret_key = os.urandom(24)  # Genera una clave aleatoria
 
 
 # Ruta para guardar los datos de un contacto
+
+
 @app.route('/contacto', methods=['POST'])
 def guardar_contactos():
     try:
@@ -88,45 +90,34 @@ def guardar_contactos():
         if conexion is None:
             return jsonify({'error': 'No se pudo conectar a la base de datos'}), 500
 
-        # Intentar JSON primero, luego form data
         datos = request.get_json(silent=True)
         if not datos:
             datos = request.form.to_dict()
-
-        # Log simple para desarrollo
-        print("Datos recibidos:", datos)
 
         nombre = datos.get('nombre', '').strip()
         correo = datos.get('correo', '').strip()
         contra = datos.get('contra', '').strip()
 
-        if not nombre or not correo:
-            return jsonify({'error': 'Nombre y correo son obligatorios'}), 400
+        if not nombre or not correo or not contra:
+            return jsonify({'error': 'Nombre, correo y contraseña son obligatorios'}), 400
+
+        contra_hash = generate_password_hash(contra)
 
         with conexion:
             with conexion.cursor() as cursor:
-                sql_insertar = """
-                INSERT INTO contactos (nombre, correo, contra)
-                VALUES (%s, %s, %s)
-                RETURNING id;
-                """
-                cursor.execute(sql_insertar, (nombre, correo, contra))
+                cursor.execute(
+                    "INSERT INTO contactos (nombre, correo, contra) VALUES (%s, %s, %s) RETURNING id;",
+                    (nombre, correo, contra_hash)
+                )
                 contacto_id = cursor.fetchone()[0]
-                contra_hash = generate_password_hash(contra)
-                cursor.execute("INSERT INTO contactos (nombre, correo, contra) VALUES (%s, %s, %s)",(nombre, correo, contra_hash))
-                
 
         conexion.close()
-
-
         return jsonify({'mensaje': 'Contacto guardado exitosamente', 'id': contacto_id}), 201
 
-    except Exception as e:
-        # Imprime traceback completo para desarrollo
+    except Exception:
         import traceback
         traceback.print_exc()
         return jsonify({'error': 'Error al procesar la solicitud'}), 500
-
 # Ruta para consultar todos los contactos guardados
 @app.route('/contactos', methods=['GET'])
 def ver_contactos():
@@ -160,8 +151,11 @@ def ver_contactos():
 
 #inicio de sesion prueba
 
-@app.route('/contactos', methods=['POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == 'GET':
+        return render_template('Login.html')
+
     datos = request.form.to_dict()
     correo = datos.get('correo', '').strip()
     contra = datos.get('contra', '').strip()
@@ -178,12 +172,11 @@ def login():
     conexion.close()
 
     if usuario and check_password_hash(usuario['contra'], contra):
-        # Guardamos datos en la sesión
         session['usuario_id'] = usuario['id']
         session['usuario_nombre'] = usuario['nombre']
         return redirect(url_for('index'))
     else:
-        return jsonify({'error': 'Correo o contraseña incorrectos'}), 401
+        return render_template('Login.html', error='Correo o contraseña incorrectos'), 401
     
 
 @app.route('/perfil')
@@ -195,7 +188,7 @@ def perfil():
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('inicio'))
+    return redirect(url_for('index'))
 
 
 

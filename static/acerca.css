@@ -1,16 +1,22 @@
 /* ========================================= */
-/* 1. Estilos Generales y Fondo (Body)  */
+/* 1. Estilos Generales y Fondo (Body) 💻 */
 /* ========================================= */
 body {
-    /* Color base más claro: Un verde oscuro muy pálido o gris muy suave */
-    background-color: #f2f7f6; 
+    /* 1. Color base: Un verde azulado muy oscuro como respaldo */
+    background-color: #081a17; 
     
-    /* Gradiente sutil para profundidad: Un resplandor muy suave desde el centro */
-    background-image: radial-gradient(circle at center, #E0E0E0 0%, #f2f7f6 70%); 
+    /* 2. Gradiente Lineal Difuminado de Múltiples Verdes Profundos */
+    background-image: linear-gradient(
+        to bottom, 
+        #081a17 0%,         /* Verde azulado oscuro (Arriba) */
+        #1c3830 30%,        /* Verde esmeralda profundo */
+        #102820 65%,        /* Verde bosque medio */
+        #081a17 100%         /* Verde azulado oscuro (Abajo) */
+    );
     background-attachment: fixed;
     
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333333; /* Cambiamos el color de texto general a oscuro para que se lea bien */
+    color: #333333; 
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -96,7 +102,7 @@ hr {
 }
 
 /* Estilo para el enlace activo (Acerca de) y Hover */
-.nav-link[href*=""],
+
 .nav-link:hover { 
     color: #4ADDAA;
     border-bottom: 2px solid #4ADDAA;
@@ -165,7 +171,7 @@ hr {
 
 
 /* ========================================= */
-/* 4. Llamada a la Acción (CTA)  */
+/* 4. Llamada a la Acción (CTA) 🚀 */
 /* ========================================= */
 h1, h2, h3, strong {
     color: #4ADDAA;
