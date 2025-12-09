@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acerca de</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='acerca.css') }}">
+</head>
+<body> 
+  <nav class="menu">
+   <div class="container-fluid">
+    <a class="navbar-brand" href="{{ url_for('index') }}">ROKO</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{{ url_for('index') }}">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('acerca_de') }}">Acerca de</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{{ url_for('contacto') }}">Conctacto</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{{ url_for('Login') }}">Inicia Sesion</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{{ url_for('registro') }}">Registro</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  </nav>
+            <main class="infotmacion">
+               <h1>Acerca de ROKO</h1>
+
+              <section class="informacion1 section">
+                <h2>¿De dónde surge nuestro nombre?</h2>
+                <p>El nombre *ROKO* surge del *basilisco de Roko*, un experimento mental que plantea que podría haber una superinteligencia artificial en el futuro que, aunque por lo demás benévola, castigaría a cualquiera que supiera de su posible existencia, pero no contribuyera directamente a su avance o desarrollo, con el fin de incentivar dicho avance.</p>
+              </section>
+
+              <section class="informacion1 section">
+                <h2>Nuestra Misión</h2>
+                <p>En ROKO, nuestra misión es simple pero crucial: proporcionar una *defensa digital robusta, fiable y accesible* para todos nuestros usuarios. Entendemos que el mundo digital de hoy exige una vigilancia constante, y estamos aquí para ser su escudo más confiable.</p>
+              </section>
+
+              <section class="informacion1 section">
+                <h2>Nuestra Visión</h2>
+                <p>Ser la plataforma de análisis y detección de amenazas digitales *más confiable y accesible a nivel global*, empoderando a cada usuario a interactuar con el mundo digital sin miedo, gracias a herramientas transparentes y una seguridad inquebrantable.</p>
+              </section>
+        
+              <hr>
+
+              <section class="informacion1 section">
+               <h2>Nuestro Compromiso con la Confianza</h2>
+               <p>La confianza no es algo que se pida, es algo que se gana. En ROKO, lo logramos a través de:</p>
+                <ul>
+                  <li>
+                    <strong>Privacidad Absoluta:</strong> Su seguridad es nuestra prioridad, y esto incluye su privacidad. ROKO *nunca almacena, vende o comparte* sus archivos o información personal con terceros. Los archivos se procesan únicamente con el fin de la detección de amenazas y se eliminan de forma segura después del análisis.
+                  </li>
+                  <li>
+                    <strong>Resultados Imparciales:</strong> Utilizamos múltiples motores de escaneo y una base de datos de amenazas actualizada constantemente para ofrecerle la visión más completa y objetiva del estado de un archivo.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="section informacion 2">
+               <h2>Únase a la Comunidad ROKO</h2>
+               <p>Miles de usuarios confían en ROKO Lector de Virus a diario para verificar archivos antes de ejecutarlos. Le invitamos a experimentar la tranquilidad que viene con la verdadera seguridad digital.</p>
+            
+               <h3>Beneficios por ser parte de Nuestra Comunidad</h3>
+                <ul>
+                  <li>Poder verificar los URL (en futuras actualizaciones)</li>
+                 <li>Tener un historial de la lectura de tus archivos y URL</li>
+                </ul>
+
+                <a href="{{ url_for('registro') }}" class="button">¡REGISTRATE YA!</a>
+              </section>
+
+    </main>
+ </body>
+</html>

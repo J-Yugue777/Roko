@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario De Registro</title>
+    <link rel="stylesheet" href="/static/index.css">
+</head>
+
+<body>
+<div class="container">
+    <form id="contactoForm" class="formulario">
+        <nav>
+        <img src="{{ url_for('static', filename='ROKO2.png.png') }}" width="370" height="170" alt="Logo">
+           <ul class="formulario-ul">
+              <li class="li-formulario"> <a href="{{ url_for('Login') }}">Iniciar Sesión</a></li>
+              <li class="li-formulario"> <a href="{{ url_for('registro') }}">Registrarse</a></li>
+              <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+
+            </ul>
+       </nav>
+        <h2 class="h2-registro">Registro</h2>
+        <section class="inputs">
+        <label>Nombre</label>
+        <input type="text" placeholder="Por ej. SrSpes" id="nombre">
+        <label>Email</label>
+        <input type="email"  placeholder="tuemail@gmail.com" id="correo">
+        <label>Contraseña</label>
+        <input type="password">
+        <label>Confirmar Contraseña</label>
+        <input type="password" id="contra">
+        </section>
+        <button type="submit">Enviar</button>
+        <p>Ya Tienes Un Cuenta? <a href="{{ url_for('Login') }}">Iniciar Sesion</a></p>
+    </form>
+<script>
+document.getElementById('contactoForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const data = {
+    nombre: document.getElementById('nombre').value,
+    correo: document.getElementById('correo').value,
+    contra: document.getElementById('contra').value,
+    contra: document.getElementById('contra').value
+
+  };
+  const res = await fetch('/contacto', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  console.log(await res.json());
+});
+</script>
+</div>
+
+</body>
+</html> 
