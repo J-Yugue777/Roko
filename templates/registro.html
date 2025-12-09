@@ -11,47 +11,76 @@
 <div class="container">
     <form id="contactoForm" class="formulario">
         <nav>
-        <img src="{{ url_for('static', filename='ROKO2.png.png') }}" width="370" height="170" alt="Logo">
-           <ul class="formulario-ul">
-              <li class="li-formulario"> <a href="{{ url_for('Login') }}">Iniciar Sesión</a></li>
-              <li class="li-formulario"> <a href="{{ url_for('registro') }}">Registrarse</a></li>
-              <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
-
+            <img src="{{ url_for('static', filename='ROKO2.png.png') }}" width="370" height="170" alt="Logo">
+            <ul class="formulario-ul">
+                <li class="li-formulario"><a href="{{ url_for('login') }}">Iniciar Sesión</a></li>
+                <li class="li-formulario"><a href="{{ url_for('registro') }}">Registrarse</a></li>
             </ul>
-       </nav>
+        </nav>
+
         <h2 class="h2-registro">Registro</h2>
+
         <section class="inputs">
-        <label>Nombre</label>
-        <input type="text" placeholder="Por ej. SrSpes" id="nombre">
-        <label>Email</label>
-        <input type="email"  placeholder="tuemail@gmail.com" id="correo">
-        <label>Contraseña</label>
-        <input type="password">
-        <label>Confirmar Contraseña</label>
-        <input type="password" id="contra">
+            <label>Nombre</label>
+            <input type="text" id="nombre" placeholder="Por ej. SrSpes" required>
+
+            <label>Email</label>
+            <input type="email" id="correo" placeholder="tuemail@gmail.com" required>
+
+            <label>Contraseña</label>
+            <input type="password" id="contra" required>
+
+            <label>Confirmar Contraseña</label>
+            <input type="password" id="contra2" required>
         </section>
+
         <button type="submit">Enviar</button>
-        <p>Ya Tienes Un Cuenta? <a href="{{ url_for('Login') }}">Iniciar Sesion</a></p>
+        <p>Ya tienes una cuenta? <a href="{{ url_for('login') }}">Iniciar Sesión</a></p>
+
+        <p id="mensajeError" style="color:red;"></p>
     </form>
+
 <script>
 document.getElementById('contactoForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const data = {
-    nombre: document.getElementById('nombre').value,
-    correo: document.getElementById('correo').value,
-    contra: document.getElementById('contra').value,
-    contra: document.getElementById('contra').value
+    e.preventDefault();
 
-  };
-  const res = await fetch('/contacto', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  });
-  console.log(await res.json());
+    const nombre = document.getElementById('nombre').value.trim();
+    const correo = document.getElementById('correo').value.trim();
+    const contra = document.getElementById('contra').value;
+    const contra2 = document.getElementById('contra2').value;
+
+    const mensajeError = document.getElementById('mensajeError');
+
+    if (contra !== contra2) {
+        mensajeError.textContent = "Las contraseñas no coinciden";
+        return;
+    }
+
+    const data = { nombre, correo, contra };
+
+    try {
+        const res = await fetch('/contacto/guardar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        const resultado = await res.json();
+
+        if (res.status === 201) {
+            // Registro exitoso → redirige a login
+            window.location.href = '/login';
+        } else {
+            mensajeError.textContent = resultado.error || "Ocurrió un error al registrarse";
+        }
+
+    } catch (error) {
+        mensajeError.textContent = "Error en la conexión con el servidor";
+        console.error(error);
+    }
 });
 </script>
 </div>
 
 </body>
-</html> 
+</html>
