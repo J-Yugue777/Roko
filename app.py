@@ -76,6 +76,43 @@ def contacto():
 
 app.secret_key = os.urandom(24)  # Genera una clave aleatoria
 
+@app.route('/contacto', methods=['GET', 'POST'])
+def guardar_contactos():
+    try:
+        conexion = conectar_bd()
+        if conexion is None:
+            return jsonify({'error': 'No se pudo conectar a la base de datos'}), 500
+
+        datos = request.get_json(silent=True)
+        if not datos:
+            datos = request.form.to_dict()
+
+        nombre = datos.get('nombre', '').strip()
+        correo = datos.get('correo', '').strip()
+        contra = datos.get('contra', '').strip()
+
+        if not nombre or not correo or not contra:
+            return jsonify({'error': 'Nombre, correo y contraseña son obligatorios'}), 400
+
+        contra_hash = generate_password_hash(contra)
+
+        with conexion:
+            with conexion.cursor() as cursor:
+                cursor.execute(
+                    "INSERT INTO contactos (nombre, correo, contra) VALUES (%s, %s, %s) RETURNING id;",
+                    (nombre, correo, contra_hash)
+                )
+                contacto_id = cursor.fetchone()[0]
+
+        conexion.close()
+        return jsonify({'mensaje': 'Contacto guardado exitosamente', 'id': contacto_id}), 201
+
+    except Exception:
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': 'Error al procesar la solicitud'}), 500
+#Ruta para consultar todos los contactos guardados
+
 
 
 
