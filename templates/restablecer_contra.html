@@ -4,47 +4,448 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restablecer Contraseña - ROKO</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 38px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+            user-select: none;
+        }
+
+        .toggle-password:hover {
+            color: #4CAF50;
+        }
+
+        .password-requirements {
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+            padding-left: 5px;
+        }
+
+        .password-requirements ul {
+            margin: 5px 0 0 20px;
+        }
+
+        .password-requirements li {
+            margin: 3px 0;
+        }
+
+        .password-requirements li.valid {
+            color: #4CAF50;
+        }
+
+        .password-requirements li.invalid {
+            color: #f44336;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .links a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .links a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .password-strength {
+            height: 5px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .strength-weak {
+            width: 33%;
+            background-color: #f44336;
+        }
+
+        .strength-medium {
+            width: 66%;
+            background-color: #ff9800;
+        }
+
+        .strength-strong {
+            width: 100%;
+            background-color: #4CAF50;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .icon {
+                width: 70px;
+                height: 70px;
+                font-size: 35px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-center">Nueva Contraseña</h3>
-                    </div>
-                    <div class="card-body">
-                        {% with messages = get_flashed_messages(with_categories=true) %}
-                            {% if messages %}
-                                {% for category, message in messages %}
-                                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                                        {{ message }}
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                        {% endwith %}
+    <div class="container">
+        <div class="icon">🔑</div>
+        
+        <div class="header">
+            <h1>Restablecer Contraseña</h1>
+            <p>Ingresa tu nueva contraseña segura</p>
+        </div>
 
-                        <form method="POST">
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Nueva Contraseña</label>
-                                <input type="password" class="form-control" id="password" name="password" 
-                                       minlength="6" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="confirmar_password" class="form-label">Confirmar Contraseña</label>
-                                <input type="password" class="form-control" id="confirmar_password" 
-                                       name="confirmar_password" minlength="6" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100">Restablecer Contraseña</button>
-                        </form>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
                     </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" id="resetForm">
+            <div class="form-group">
+                <label for="nueva_contra">Nueva Contraseña</label>
+                <input 
+                    type="password" 
+                    id="nueva_contra" 
+                    name="nueva_contra" 
+                    placeholder="Ingresa tu nueva contraseña"
+                    required
+                    minlength="6"
+                >
+                <span class="toggle-password" onclick="togglePassword('nueva_contra')">👁️</span>
+                <div class="password-strength">
+                    <div class="password-strength-bar" id="strengthBar"></div>
+                </div>
+                <div class="password-requirements">
+                    <p><strong>Requisitos de contraseña:</strong></p>
+                    <ul>
+                        <li id="req-length">Mínimo 6 caracteres</li>
+                        <li id="req-letter">Al menos una letra</li>
+                        <li id="req-number">Al menos un número (recomendado)</li>
+                    </ul>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label for="confirmar_contra">Confirmar Contraseña</label>
+                <input 
+                    type="password" 
+                    id="confirmar_contra" 
+                    name="confirmar_contra" 
+                    placeholder="Confirma tu nueva contraseña"
+                    required
+                >
+                <span class="toggle-password" onclick="togglePassword('confirmar_contra')">👁️</span>
+                <div id="match-message" style="font-size: 12px; margin-top: 5px; padding-left: 5px;"></div>
+            </div>
+
+            <button type="submit" class="btn" id="submitBtn">Restablecer Contraseña</button>
+        </form>
+
+        <div class="links">
+            <a href="{{ url_for('Login') }}">← Volver al inicio de sesión</a>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const nuevaContra = document.getElementById('nueva_contra');
+        const confirmarContra = document.getElementById('confirmar_contra');
+        const submitBtn = document.getElementById('submitBtn');
+        const strengthBar = document.getElementById('strengthBar');
+        const matchMessage = document.getElementById('match-message');
+
+        // Toggle para mostrar/ocultar contraseña
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            field.type = field.type === 'password' ? 'text' : 'password';
+        }
+
+        // Validar requisitos de contraseña
+        nuevaContra.addEventListener('input', function() {
+            const password = this.value;
+            const lengthReq = document.getElementById('req-length');
+            const letterReq = document.getElementById('req-letter');
+            const numberReq = document.getElementById('req-number');
+
+            // Validar longitud
+            if (password.length >= 6) {
+                lengthReq.classList.add('valid');
+                lengthReq.classList.remove('invalid');
+            } else {
+                lengthReq.classList.add('invalid');
+                lengthReq.classList.remove('valid');
+            }
+
+            // Validar letra
+            if (/[a-zA-Z]/.test(password)) {
+                letterReq.classList.add('valid');
+                letterReq.classList.remove('invalid');
+            } else {
+                letterReq.classList.add('invalid');
+                letterReq.classList.remove('valid');
+            }
+
+            // Validar número
+            if (/[0-9]/.test(password)) {
+                numberReq.classList.add('valid');
+                numberReq.classList.remove('invalid');
+            } else {
+                numberReq.classList.add('invalid');
+                numberReq.classList.remove('valid');
+            }
+
+            // Calcular fuerza de contraseña
+            let strength = 0;
+            if (password.length >= 6) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+            strengthBar.className = 'password-strength-bar';
+            if (strength <= 1) {
+                strengthBar.classList.add('strength-weak');
+            } else if (strength <= 2) {
+                strengthBar.classList.add('strength-medium');
+            } else {
+                strengthBar.classList.add('strength-strong');
+            }
+
+            checkPasswordMatch();
+        });
+
+        // Verificar que las contraseñas coincidan
+        confirmarContra.addEventListener('input', checkPasswordMatch);
+
+        function checkPasswordMatch() {
+            if (confirmarContra.value === '') {
+                matchMessage.textContent = '';
+                matchMessage.style.color = '';
+                return;
+            }
+
+            if (nuevaContra.value === confirmarContra.value) {
+                matchMessage.textContent = '✓ Las contraseñas coinciden';
+                matchMessage.style.color = '#4CAF50';
+            } else {
+                matchMessage.textContent = '✗ Las contraseñas no coinciden';
+                matchMessage.style.color = '#f44336';
+            }
+        }
+
+        // Validación del formulario
+        document.getElementById('resetForm').addEventListener('submit', function(e) {
+            const password = nuevaContra.value;
+            const confirmPassword = confirmarContra.value;
+
+            if (password.length < 6) {
+                e.preventDefault();
+                alert('La contraseña debe tener al menos 6 caracteres');
+                return;
+            }
+
+            if (!/[a-zA-Z]/.test(password)) {
+                e.preventDefault();
+                alert('La contraseña debe contener al menos una letra');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert('Las contraseñas no coinciden');
+                return;
+            }
+
+            // Deshabilitar el botón para evitar envíos múltiples
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Procesando...';
+        });
+
+        // Auto-ocultar alertas después de 5 segundos
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                alert.style.transition = 'opacity 0.5s ease';
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 500);
+            }, 5000);
+        });
+    </script>
 </body>
 </html>
