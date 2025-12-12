@@ -1,5 +1,7 @@
-from flask import Flask, request, jsonify, render_template, session,url_for,redirect  # Importa Flask para crear la app web, manejar peticiones y usar plantillas HTML
+from flask import Flask, request, jsonify, render_template, session,url_for,redirect, flash# Importa Flask para crear la app web, manejar peticiones y usar plantillas HTML
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_mail import Mail, Message
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 import psycopg2  # Permite conectarse y trabajar con bases de datos PostgreSQL
 from psycopg2.extras import RealDictCursor  # Devuelve los resultados de las consultas como diccionarios (clave: valor)
 import os  # Permite acceder a variables del sistema y manejar rutas de archivos
@@ -16,6 +18,23 @@ DB_CONFIG = {
     'password':'123456',
     'port':5432
 }
+
+
+# Configuración de Flask-Mail para Gmail
+app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS') == 'True'
+app.config['MAIL_USE_SSL'] = os.getenv('MAIL_USE_SSL') == 'True'
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_USERNAME')
+app.config['MAIL_DEFAULT_CHARSET'] = 'utf-8'
+
+mail = Mail(app)
+
+# Serializador para generar tokens seguros
+
+serializer = URLSafeTimedSerializer(os.getenv('SECRET_KEY', 'mi_clave_secreta'))
 
 
 def conectar_bd(): # crea funcion para crear una conexion con la base de datos 
@@ -45,6 +64,8 @@ def crear_tabla():
         cursor.close()     # Cierra el cursor
         conexion.close()   # Cierra la conexión
 
+
+
 # Ruta principal del sitio web
 @app.route('/')
 def inicio():
@@ -71,6 +92,19 @@ def acerca_de():
 @app.route('/contacto')
 def contacto():
     return render_template('contacto.html')
+
+@app.route('/perfil')
+def perfil():
+    return render_template('perfil.html')
+
+@app.route('/recuperar_contra')
+def recuperar_contra():
+    return render_template('recuperar_contra.html')
+
+
+@app.route('/restablecer_contra')
+def restablecer_contra():
+    return render_template('restablecer_contra.html')
 
 #inicio de sesion y registro guardado
 
@@ -173,7 +207,7 @@ def login():
     conexion.close()
 
     if usuario and check_password_hash(usuario['contra'], contra):
-        session['usuario_id'] = usuario['id']
+        session['id'] = usuario['id']
         session['usuario_nombre'] = usuario['nombre']
         return redirect(url_for('index'))
     else:
@@ -181,15 +215,120 @@ def login():
     
 
 @app.route('/perfil')
-def perfil():
-    if 'usuario_id' not in session:
+def perfil_user():
+    if 'id' not in session:
         return redirect(url_for('Login'))  # Redirige si no está logueado
-    return f"Bienvenido {session['usuario_nombre']}"
+    return f"Bienvenido {session['nombre']}"
 
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('index'))
+
+
+#recuperar contraseña prueba
+
+
+@app.route('/recuperar-password', methods=['GET', 'POST'])
+def recuperar_password():
+    if request.method == 'POST':
+        correo = request.form.get('correo', '').strip()
+        
+        # Verifica si el correo existe en la base de datos
+        conexion = conectar_bd()
+        if conexion is None:
+            flash('Error de conexión con la base de datos', 'danger')
+            return render_template('recuperar_contra.html')
+        
+        with conexion:
+            with conexion.cursor(cursor_factory=RealDictCursor) as cursor:
+                cursor.execute("SELECT * FROM contactos WHERE correo = %s", (correo,))
+                usuario = cursor.fetchone()
+        
+        conexion.close()
+        
+        if usuario:
+            try:
+                # Genera token único con expiración de 30 minutos
+                token = serializer.dumps(correo, salt='recuperar-password')
+                
+                # Crea el enlace de recuperación
+                link = url_for('restablecer_password', token=token, _external=True)
+                
+                # Envía el correo
+                msg = Message('Recuperación de Contraseña - ROKO',
+                             recipients=[correo])
+                msg.body = f'''Hola {usuario['nombre']},
+
+Has solicitado restablecer tu contraseña en ROKO. Haz clic en el siguiente enlace:
+
+{link}
+
+Este enlace expirará en 30 minutos.
+
+Si no solicitaste este cambio, ignora este correo.
+
+Saludos,
+Equipo ROKO
+'''
+                mail.send(msg)
+                flash('Se ha enviado un correo con instrucciones para restablecer tu contraseña.', 'success')
+                return redirect(url_for('Login'))
+            except Exception as e:
+                print(f"Error al enviar correo: {e}")
+                flash('Error al enviar el correo. Verifica tu configuración de email.', 'danger')
+        else:
+            flash('El correo electrónico no está registrado.', 'danger')
+    
+    return render_template('recuperar_contra.html')
+
+
+@app.route('/restablecer-password/<token>', methods=['GET', 'POST'])
+def restablecer_password(token):
+    try:
+        # Verifica el token (expira en 1800 segundos = 30 minutos)
+        correo = serializer.loads(token, salt='recuperar-password', max_age=1800)
+    except SignatureExpired:
+        flash('El enlace ha expirado. Solicita uno nuevo.', 'danger')
+        return redirect(url_for('recuperar_contra'))
+    except BadSignature:
+        flash('El enlace es inválido.', 'danger')
+        return redirect(url_for('recuperar_contra'))
+    
+    if request.method == 'POST':
+        nueva_password = request.form.get('password', '').strip()
+        confirmar_password = request.form.get('confirmar_password', '').strip()
+        
+        if nueva_password != confirmar_password:
+            flash('Las contraseñas no coinciden.', 'danger')
+            return render_template('restablecer_contra.html', token=token)
+        
+        if len(nueva_password) < 6:
+            flash('La contraseña debe tener al menos 6 caracteres.', 'danger')
+            return render_template('restablecer_contra.html', token=token)
+        
+        # Hashea la nueva contraseña
+        password_hash = generate_password_hash(nueva_password)
+        
+        # Actualiza la contraseña en la base de datos
+        conexion = conectar_bd()
+        if conexion is None:
+            flash('Error de conexión con la base de datos', 'danger')
+            return render_template('restablecer_contra.html', token=token)
+        
+        with conexion:
+            with conexion.cursor() as cursor:
+                cursor.execute(
+                    "UPDATE contactos SET contra = %s WHERE correo = %s",
+                    (password_hash, correo)
+                )
+        
+        conexion.close()
+        
+        flash('Tu contraseña ha sido actualizada exitosamente.', 'success')
+        return redirect(url_for('Login'))
+    
+    return render_template('restablecer_contra.html', token=token)
 
 
 
