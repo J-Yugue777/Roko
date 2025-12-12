@@ -17,12 +17,17 @@ app = Flask(__name__)
 app.secret_key = secrets.token_hex(32)  # Genera 64 caracteres hexadecimales
 
 # Configuración de correo electrónico
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # Cambia según tu proveedor
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'tu_correo@gmail.com'  # Pon tu correo aquí
-app.config['MAIL_PASSWORD'] = 'tu_contraseña_app'  # Contraseña de aplicación de Gmail
-app.config['MAIL_DEFAULT_SENDER'] = 'tu_correo@gmail.com'
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = 'tu_correo@gmail.com'  # ← CAMBIA ESTO
+app.config['MAIL_PASSWORD'] = 'xxxx xxxx xxxx xxxx'  # ← CONTRASEÑA DE APLICACIÓN (16 caracteres)
+app.config['MAIL_DEFAULT_SENDER'] = 'tu_correo@gmail.com'  # ← CAMBIA ESTO
+
+
+
 
 mail = Mail(app)
 serializer = URLSafeTimedSerializer(app.secret_key)
@@ -77,9 +82,7 @@ def crear_tabla():
         conexion.close()
 
 
-# ==========================================
 # RUTAS DE VISTAS SIMPLES
-# ==========================================
 
 @app.route('/')
 def inicio():
@@ -116,9 +119,9 @@ def perfil():
     return render_template('perfil.html')
 
 
-# ==========================================
 # RUTAS DE FUNCIONALIDAD
-# ==========================================
+
+
 
 # Ruta para guardar contactos (registro)
 @app.route('/contacto', methods=['GET', 'POST'])
