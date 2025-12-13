@@ -22,9 +22,9 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_USERNAME'] = 'tu_correo@gmail.com'  # ← CAMBIA ESTO
-app.config['MAIL_PASSWORD'] = 'xxxx xxxx xxxx xxxx'  # ← CONTRASEÑA DE APLICACIÓN (16 caracteres)
-app.config['MAIL_DEFAULT_SENDER'] = 'tu_correo@gmail.com'  # ← CAMBIA ESTO
+app.config['MAIL_USERNAME'] = 'roko.hhtyi2025@gmail.com'  # ← CAMBIA ESTO
+app.config['MAIL_PASSWORD'] = 'baku zlzc ijdh atfb'  # ← CONTRASEÑA DE APLICACIÓN (16 caracteres)
+app.config['MAIL_DEFAULT_SENDER'] = 'roko.hhtyi2025@gmail.com'  # ← CAMBIA ESTO
 
 
 
